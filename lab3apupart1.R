@@ -1,0 +1,10 @@
+install.packages ("neuralnet")
+library(neuralnet)
+normalize <- function(x) {return ((x - min(x)) / (max(x) - min(x))) }
+x <- as.data.frame(runif(10, min = 1, max = 10))
+result <- exp(sqrt(x))
+trainingData <- cbind(result, x)
+colnames(trainingData) <- c("Output", "Result")
+maxmindf<- as.data.frame(lapply(trainingData, normalize))
+net.price <- neuralnet(Result~Output, maxmindf, hidden = c(3,4,3,4), threshold = 0.01)
+plot(net.price)
